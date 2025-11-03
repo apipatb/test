@@ -9,8 +9,15 @@
 <body>
     <header>
         <div class="container">
-            <h1>📰 ข่าวสารประจำวัน</h1>
-            <p class="tagline">ติดตามข่าวสารล่าสุดจากทั่วโลก</p>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🧠 Smart News</h1>
+                    <p class="tagline">ข่าวอัจฉริยะ แนะนำตามความสนใจของคุณ</p>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" data-dark-mode title="Dark Mode">🌓</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -18,8 +25,8 @@
         <!-- Search and Filter Section -->
         <section class="controls">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ค้นหาข่าว...">
-                <button id="searchBtn">🔍 ค้นหา</button>
+                <input type="text" id="searchInput" placeholder="🔍 ค้นหาข่าวด้วย AI Smart Search...">
+                <button id="searchBtn">ค้นหา</button>
             </div>
 
             <div class="category-filters">
@@ -29,6 +36,13 @@
                 <button class="category-btn" data-category="sports">กีฬา</button>
                 <button class="category-btn" data-category="entertainment">บันเทิง</button>
                 <button class="category-btn" data-category="health">สุขภาพ</button>
+            </div>
+
+            <div class="sort-controls">
+                <span class="sort-label">เรียงตาม:</span>
+                <button class="sort-btn active" data-sort="date">📅 ล่าสุด</button>
+                <button class="sort-btn" data-sort="trending">🔥 กำลังฮิต</button>
+                <button class="sort-btn" data-sort="recommended">🎯 แนะนำ</button>
             </div>
         </section>
 
