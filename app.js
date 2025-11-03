@@ -395,6 +395,7 @@ class DarkModeManager {
 
 let currentCategory = 'all';
 let searchQuery = '';
+let currentSort = 'newest';
 let allNews = [...sampleNews];
 let sortBy = 'date'; // date, trending, recommended
 let smartEngine;
@@ -407,7 +408,11 @@ let darkModeManager;
 const newsContainer = document.getElementById('newsContainer');
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
+const clearBtn = document.getElementById('clearBtn');
 const categoryBtns = document.querySelectorAll('.category-btn');
+const sortSelect = document.getElementById('sortSelect');
+const newsCount = document.getElementById('newsCount');
+const darkModeToggle = document.getElementById('darkModeToggle');
 
 // ============================================
 // 🚀 INITIALIZATION
@@ -427,6 +432,9 @@ function init() {
 // ============================================
 
 function setupEventListeners() {
+    // Dark mode toggle
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
     // Category filter buttons
     categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -482,7 +490,9 @@ function filterNews() {
     let filteredNews = [...allNews];
 
     // Filter by category
-    if (currentCategory !== 'all') {
+    if (currentCategory === 'favorites') {
+        filteredNews = allNews.filter(news => favorites.includes(news.id));
+    } else if (currentCategory !== 'all') {
         filteredNews = filteredNews.filter(news => news.category === currentCategory);
     }
 
@@ -529,6 +539,9 @@ function sortNews(newsArray) {
 
 function displayNews(newsArray) {
     newsContainer.innerHTML = '';
+
+    // Update news count
+    updateNewsCount(newsArray.length);
 
     if (newsArray.length === 0) {
         newsContainer.innerHTML = `

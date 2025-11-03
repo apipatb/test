@@ -29,13 +29,24 @@
                 <button id="searchBtn">ค้นหา</button>
             </div>
 
-            <div class="category-filters">
-                <button class="category-btn active" data-category="all">ทั้งหมด</button>
-                <button class="category-btn" data-category="technology">เทคโนโลยี</button>
-                <button class="category-btn" data-category="business">ธุรกิจ</button>
-                <button class="category-btn" data-category="sports">กีฬา</button>
-                <button class="category-btn" data-category="entertainment">บันเทิง</button>
-                <button class="category-btn" data-category="health">สุขภาพ</button>
+            <div class="controls-row">
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">ทั้งหมด</button>
+                    <button class="category-btn" data-category="technology">เทคโนโลยี</button>
+                    <button class="category-btn" data-category="business">ธุรกิจ</button>
+                    <button class="category-btn" data-category="sports">กีฬา</button>
+                    <button class="category-btn" data-category="entertainment">บันเทิง</button>
+                    <button class="category-btn" data-category="health">สุขภาพ</button>
+                    <button class="category-btn favorites-btn" data-category="favorites">⭐ โปรด</button>
+                </div>
+
+                <div class="sort-controls">
+                    <label for="sortSelect">เรียง:</label>
+                    <select id="sortSelect">
+                        <option value="newest">ล่าสุด</option>
+                        <option value="oldest">เก่าสุด</option>
+                    </select>
+                </div>
             </div>
 
             <div class="sort-controls">
