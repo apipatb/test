@@ -1,0 +1,28 @@
+{
+  "name": "smart-news-app",
+  "version": "2.0.0",
+  "description": "🧠 Smart News App - แอปพลิเคชันข่าวอัจฉริยะที่ขับเคลื่อนด้วย AI",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "preview": "python -m http.server 8000"
+  },
+  "keywords": [
+    "news",
+    "ai",
+    "smart",
+    "recommendation",
+    "personalization",
+    "machine-learning",
+    "javascript",
+    "vanilla-js",
+    "html",
+    "css"
+  ],
+  "author": "Claude AI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apipatb/test"
+  }
+}
