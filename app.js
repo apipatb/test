@@ -95,22 +95,40 @@ const sampleNews = [
 // State management
 let currentCategory = 'all';
 let searchQuery = '';
+let currentSort = 'newest';
 let allNews = [...sampleNews];
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
 // DOM Elements
 const newsContainer = document.getElementById('newsContainer');
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
+const clearBtn = document.getElementById('clearBtn');
 const categoryBtns = document.querySelectorAll('.category-btn');
+const sortSelect = document.getElementById('sortSelect');
+const newsCount = document.getElementById('newsCount');
+const darkModeToggle = document.getElementById('darkModeToggle');
 
 // Initialize app
 function init() {
-    displayNews(allNews);
+    loadDarkModePreference();
+    displayNews(getFilteredAndSortedNews());
     setupEventListeners();
+}
+
+// Load dark mode preference from localStorage
+function loadDarkModePreference() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
 }
 
 // Setup event listeners
 function setupEventListeners() {
+    // Dark mode toggle
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
     // Category filter buttons
     categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -131,6 +149,22 @@ function setupEventListeners() {
             performSearch();
         }
     });
+
+    // Clear search
+    clearBtn.addEventListener('click', clearSearch);
+
+    // Sort functionality
+    sortSelect.addEventListener('change', (e) => {
+        currentSort = e.target.value;
+        filterNews();
+    });
+}
+
+// Toggle dark mode
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
 }
 
 // Perform search
@@ -139,12 +173,30 @@ function performSearch() {
     filterNews();
 }
 
-// Filter news based on category and search query
-function filterNews() {
+// Clear search
+function clearSearch() {
+    searchInput.value = '';
+    searchQuery = '';
+    // Reset to "all" category
+    currentCategory = 'all';
+    categoryBtns.forEach(btn => {
+        if (btn.dataset.category === 'all') {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    filterNews();
+}
+
+// Get filtered and sorted news
+function getFilteredAndSortedNews() {
     let filteredNews = allNews;
 
     // Filter by category
-    if (currentCategory !== 'all') {
+    if (currentCategory === 'favorites') {
+        filteredNews = allNews.filter(news => favorites.includes(news.id));
+    } else if (currentCategory !== 'all') {
         filteredNews = filteredNews.filter(news => news.category === currentCategory);
     }
 
@@ -156,12 +208,38 @@ function filterNews() {
         );
     }
 
+    // Sort news
+    filteredNews = sortNews(filteredNews);
+
+    return filteredNews;
+}
+
+// Sort news
+function sortNews(newsArray) {
+    return [...newsArray].sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+
+        if (currentSort === 'newest') {
+            return dateB - dateA; // Newest first
+        } else {
+            return dateA - dateB; // Oldest first
+        }
+    });
+}
+
+// Filter news based on category and search query
+function filterNews() {
+    const filteredNews = getFilteredAndSortedNews();
     displayNews(filteredNews);
 }
 
 // Display news articles
 function displayNews(newsArray) {
     newsContainer.innerHTML = '';
+
+    // Update news count
+    updateNewsCount(newsArray.length);
 
     if (newsArray.length === 0) {
         newsContainer.innerHTML = '<div class="no-results">ไม่พบข่าวที่ค้นหา</div>';
@@ -172,6 +250,11 @@ function displayNews(newsArray) {
         const newsCard = createNewsCard(news);
         newsContainer.appendChild(newsCard);
     });
+}
+
+// Update news count display
+function updateNewsCount(count) {
+    newsCount.textContent = `พบข่าว ${count} รายการ`;
 }
 
 // Create news card element
@@ -187,8 +270,15 @@ function createNewsCard(news) {
         'health': 'สุขภาพ'
     };
 
+    const isFavorited = favorites.includes(news.id);
+
     card.innerHTML = `
-        <img src="${news.image}" alt="${news.title}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&h=300&fit=crop'">
+        <div style="position: relative;">
+            <img src="${news.image}" alt="${news.title}" class="news-image" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&h=300&fit=crop'">
+            <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" data-id="${news.id}" onclick="toggleFavorite(event, ${news.id})">
+                ${isFavorited ? '⭐' : '☆'}
+            </button>
+        </div>
         <div class="news-content">
             <span class="news-category">${categoryMap[news.category]}</span>
             <h2 class="news-title">${news.title}</h2>
@@ -200,11 +290,39 @@ function createNewsCard(news) {
         </div>
     `;
 
-    card.addEventListener('click', () => {
-        alert(`คุณคลิกที่: ${news.title}\n\nในแอปจริง จะเปิดหน้ารายละเอียดข่าวฉบับเต็ม`);
+    card.addEventListener('click', (e) => {
+        // Don't trigger if clicking on favorite button
+        if (!e.target.classList.contains('favorite-btn')) {
+            showNewsDetail(news);
+        }
     });
 
     return card;
+}
+
+// Toggle favorite
+function toggleFavorite(event, newsId) {
+    event.stopPropagation(); // Prevent card click
+
+    const index = favorites.indexOf(newsId);
+    if (index > -1) {
+        // Remove from favorites
+        favorites.splice(index, 1);
+    } else {
+        // Add to favorites
+        favorites.push(newsId);
+    }
+
+    // Save to localStorage
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+
+    // Update display
+    filterNews();
+}
+
+// Show news detail
+function showNewsDetail(news) {
+    alert(`คุณคลิกที่: ${news.title}\n\nในแอปจริง จะเปิดหน้ารายละเอียดข่าวฉบับเต็ม`);
 }
 
 // Format date to Thai format
