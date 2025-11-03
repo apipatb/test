@@ -766,17 +766,112 @@ function getCategoryName(category) {
     return map[category] || category;
 }
 
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
+// ============================================
+// 🔔 TOAST NOTIFICATIONS
+// ============================================
 
-    setTimeout(() => toast.classList.add('show'), 10);
+function showToast(message, type = 'success') {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+
+    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+    toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+
+    toastContainer.appendChild(toast);
+
     setTimeout(() => {
-        toast.classList.remove('show');
+        toast.style.animation = 'slideOutRight 0.3s ease';
         setTimeout(() => toast.remove(), 300);
-    }, 2000);
+    }, 3000);
+}
+
+// ============================================
+// 📤 SHARE FUNCTIONS
+// ============================================
+
+function getNewsById(id) {
+    return allNews.find(news => news.id === id);
+}
+
+function shareToFacebook(event, newsId) {
+    event.stopPropagation();
+    const news = getNewsById(newsId);
+    if (!news) return;
+
+    const url = window.location.href;
+    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(news.title)}`;
+
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+    showToast('กำลังเปิด Facebook...', 'info');
+}
+
+function shareToTwitter(event, newsId) {
+    event.stopPropagation();
+    const news = getNewsById(newsId);
+    if (!news) return;
+
+    const url = window.location.href;
+    const text = `${news.title}\n\n#SmartNews #ข่าววันนี้`;
+    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+    showToast('กำลังเปิด Twitter (X)...', 'info');
+}
+
+function shareToLine(event, newsId) {
+    event.stopPropagation();
+    const news = getNewsById(newsId);
+    if (!news) return;
+
+    const url = window.location.href;
+    const message = `${news.title}\n${url}`;
+    const shareUrl = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
+
+    window.open(shareUrl, '_blank');
+    showToast('กำลังเปิด LINE...', 'info');
+}
+
+function copyLink(event, newsId) {
+    event.stopPropagation();
+    const news = getNewsById(newsId);
+    if (!news) return;
+
+    const url = window.location.href;
+    const text = `${news.title}\n${url}`;
+
+    // Try modern clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                showToast('คัดลอกลิงก์สำเร็จ!', 'success');
+            })
+            .catch(() => {
+                fallbackCopyText(text);
+            });
+    } else {
+        fallbackCopyText(text);
+    }
+}
+
+function fallbackCopyText(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+        document.execCommand('copy');
+        showToast('คัดลอกลิงก์สำเร็จ!', 'success');
+    } catch (err) {
+        showToast('ไม่สามารถคัดลอกได้', 'error');
+    }
+
+    document.body.removeChild(textarea);
 }
 
 // ============================================

@@ -681,24 +681,124 @@ header {
    TOAST NOTIFICATIONS
    ============================================ */
 
-.toast {
+#toast-container {
     position: fixed;
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(30, 41, 59, 0.95);
-    color: white;
-    padding: 16px 28px;
-    border-radius: 30px;
-    font-weight: 600;
-    box-shadow: var(--shadow-xl);
+    bottom: 20px;
+    right: 20px;
     z-index: 10000;
-    transition: bottom 0.3s ease;
-    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.toast.show {
-    bottom: 30px;
+.toast {
+    background: rgba(30, 41, 59, 0.95);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(10px);
+    animation: slideInRight 0.3s ease;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toast.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.toast.info {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Share Buttons */
+.news-actions {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.share-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.share-facebook {
+    background: #1877f2;
+    color: white;
+}
+
+.share-facebook:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+}
+
+.share-twitter {
+    background: #1da1f2;
+    color: white;
+}
+
+.share-twitter:hover {
+    background: #0d8bd9;
+    transform: translateY(-2px);
+}
+
+.share-line {
+    background: #00b900;
+    color: white;
+}
+
+.share-line:hover {
+    background: #009900;
+    transform: translateY(-2px);
+}
+
+.share-copy {
+    background: #6b7280;
+    color: white;
+}
+
+.share-copy:hover {
+    background: #4b5563;
+    transform: translateY(-2px);
+}
+
+/* Reading Time */
+.reading-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-light);
+    font-size: 0.85rem;
 }
 
 /* ============================================

@@ -3,7 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข่าวสาร - News App</title>
+
+    <!-- Primary Meta Tags -->
+    <title>ข่าวสารประจำวัน - Smart News App</title>
+    <meta name="title" content="ข่าวสารประจำวัน - Smart News App">
+    <meta name="description" content="แอปพลิเคชันข่าวที่สวยงาม มีโหมดมืด ระบบบันทึกข่าวโปรด และฟีเจอร์ครบครัน อ่านข่าวเทคโนโลยี ธุรกิจ กีฬา บันเทิง และสุขภาพ">
+    <meta name="keywords" content="ข่าว, news, ข่าวไทย, ข่าววันนี้, เทคโนโลยี, ธุรกิจ, กีฬา, บันเทิง, สุขภาพ">
+    <meta name="author" content="Smart News App">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smart-news-app.vercel.app/">
+    <meta property="og:title" content="ข่าวสารประจำวัน - Smart News App">
+    <meta property="og:description" content="แอปพลิเคชันข่าวที่สวยงาม มีโหมดมืด ระบบบันทึกข่าวโปรด และฟีเจอร์ครบครัน">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=630&fit=crop">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://smart-news-app.vercel.app/">
+    <meta property="twitter:title" content="ข่าวสารประจำวัน - Smart News App">
+    <meta property="twitter:description" content="แอปพลิเคชันข่าวที่สวยงาม มีโหมดมืด ระบบบันทึกข่าวโปรด และฟีเจอร์ครบครัน">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&h=630&fit=crop">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -66,9 +91,16 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 ข่าวสารประจำวัน - News App</p>
+            <p>&copy; 2025 ข่าวสารประจำวัน - Smart News App</p>
+            <p class="footer-links">
+                <a href="https://github.com" target="_blank" rel="noopener">GitHub</a> •
+                <a href="#" onclick="alert('Smart News App v2.0'); return false;">About</a>
+            </p>
         </div>
     </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
 
     <script src="app.js"></script>
 </body>
