@@ -9,12 +9,31 @@
 <body>
     <header>
         <div class="container">
-            <h1>📰 ข่าวสารประจำวัน</h1>
-            <p class="tagline">ติดตามข่าวสารล่าสุดจากทั่วโลก</p>
+            <div class="header-top">
+                <div class="header-text">
+                    <h1>📰 ข่าวสารประจำวัน</h1>
+                    <p class="tagline">ติดตามข่าวสารล่าสุดจากทั่วโลก</p>
+                </div>
+                <div class="header-controls">
+                    <button id="favoritesBtn" class="icon-btn" title="ข่าวที่บันทึกไว้">
+                        <span class="icon">❤️</span>
+                        <span id="favCount" class="badge">0</span>
+                    </button>
+                    <button id="darkModeToggle" class="icon-btn" title="เปลี่ยนโหมด">
+                        <span class="icon">🌙</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="container">
+        <!-- View Tabs -->
+        <section class="view-tabs">
+            <button class="tab-btn active" data-view="all">📰 ข่าวทั้งหมด</button>
+            <button class="tab-btn" data-view="favorites">❤️ ข่าวที่บันทึก</button>
+        </section>
+
         <!-- Search and Filter Section -->
         <section class="controls">
             <div class="search-box">
@@ -22,13 +41,24 @@
                 <button id="searchBtn">🔍 ค้นหา</button>
             </div>
 
-            <div class="category-filters">
-                <button class="category-btn active" data-category="all">ทั้งหมด</button>
-                <button class="category-btn" data-category="technology">เทคโนโลยี</button>
-                <button class="category-btn" data-category="business">ธุรกิจ</button>
-                <button class="category-btn" data-category="sports">กีฬา</button>
-                <button class="category-btn" data-category="entertainment">บันเทิง</button>
-                <button class="category-btn" data-category="health">สุขภาพ</button>
+            <div class="filter-row">
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">ทั้งหมด</button>
+                    <button class="category-btn" data-category="technology">เทคโนโลยี</button>
+                    <button class="category-btn" data-category="business">ธุรกิจ</button>
+                    <button class="category-btn" data-category="sports">กีฬา</button>
+                    <button class="category-btn" data-category="entertainment">บันเทิง</button>
+                    <button class="category-btn" data-category="health">สุขภาพ</button>
+                </div>
+
+                <div class="sort-box">
+                    <label for="sortSelect">เรียงตาม:</label>
+                    <select id="sortSelect">
+                        <option value="newest">ใหม่สุด</option>
+                        <option value="oldest">เก่าสุด</option>
+                        <option value="title">ชื่อ A-Z</option>
+                    </select>
+                </div>
             </div>
         </section>
 
@@ -44,6 +74,16 @@
             <p>&copy; 2025 ข่าวสารประจำวัน - News App</p>
         </div>
     </footer>
+
+    <!-- Modal for News Details -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modalBody">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
