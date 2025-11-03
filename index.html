@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข่าวสาร - News App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🧠 Smart News</h1>
+                    <p class="tagline">ข่าวอัจฉริยะ แนะนำตามความสนใจของคุณ</p>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" data-dark-mode title="Dark Mode">🌓</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search and Filter Section -->
+        <section class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 ค้นหาข่าวด้วย AI Smart Search...">
+                <button id="searchBtn">ค้นหา</button>
+            </div>
+
+            <div class="category-filters">
+                <button class="category-btn active" data-category="all">ทั้งหมด</button>
+                <button class="category-btn" data-category="technology">เทคโนโลยี</button>
+                <button class="category-btn" data-category="business">ธุรกิจ</button>
+                <button class="category-btn" data-category="sports">กีฬา</button>
+                <button class="category-btn" data-category="entertainment">บันเทิง</button>
+                <button class="category-btn" data-category="health">สุขภาพ</button>
+            </div>
+
+            <div class="sort-controls">
+                <span class="sort-label">เรียงตาม:</span>
+                <button class="sort-btn active" data-sort="date">📅 ล่าสุด</button>
+                <button class="sort-btn" data-sort="trending">🔥 กำลังฮิต</button>
+                <button class="sort-btn" data-sort="recommended">🎯 แนะนำ</button>
+            </div>
+        </section>
+
+        <!-- News Grid -->
+        <section id="newsContainer" class="news-grid">
+            <!-- News articles will be dynamically inserted here -->
+            <div class="loading">กำลังโหลดข่าว...</div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ข่าวสารประจำวัน - News App</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
